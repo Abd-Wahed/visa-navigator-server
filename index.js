@@ -21,6 +21,9 @@ const client = new MongoClient(uri, {
 let visaCollection;
 let applicatinCollection;
 
+
+const db = client.db("visaNavigatorDB");
+
 async function run() {
   try {
     // সার্ভারলেস এনভায়রনমেন্টে প্রতি রিকোয়েস্টে যেন নতুন কানেকশন ডেডলক না হয়
@@ -28,8 +31,8 @@ async function run() {
     console.log("You successfully connected to MongoDB!");
     
     // ডাটাবেজ ও কালেকশন অ্যাসাইন করা
-    visaCollection = client.db("visaNavigatorDB").collection("visas");
-    applicatinCollection = client.db("visaNavigatorDB").collection("applications");
+    // visaCollection = client.db("visaNavigatorDB").collection("visas");
+    // applicatinCollection = client.db("visaNavigatorDB").collection("applications");
 
   } catch (error) {
     console.error(error);
@@ -41,6 +44,7 @@ run().catch(console.dir);
 
 app.get('/latest-visa', async (req, res) => {
     try {
+        const visaCollection = db.collection("visas");
         const result = await visaCollection.find().sort({ _id: -1 }).limit(6).toArray();
         res.send(result);
     } catch (err) { res.status(500).send(err); }
@@ -48,6 +52,7 @@ app.get('/latest-visa', async (req, res) => {
 
 app.get('/visas', async (req, res) => {
     try {
+        const visaCollection = db.collection("visas");
         const visaType = req.query.visaType; 
         let query = {};
         if (visaType) {
@@ -60,6 +65,7 @@ app.get('/visas', async (req, res) => {
 
 app.get('/my-added-visas', async (req, res) => {
     try {
+        const visaCollection = db.collection("visas");
         const email = req.query.email;
         if (!email) return res.status(400).send({ message: "Email parameter needed" });
         const query = { user_email: email };
@@ -70,6 +76,7 @@ app.get('/my-added-visas', async (req, res) => {
 
 app.delete('/visas/:id', async (req, res) => {
     try {
+        const visaCollection = db.collection("visas");
         const id = req.params.id;
         const query = { _id: new ObjectId(id) };
         const result = await visaCollection.deleteOne(query);
@@ -80,6 +87,7 @@ app.delete('/visas/:id', async (req, res) => {
 
 app.get('/visas/:id', async (req, res) => {
     try {
+        const visaCollection = db.collection("visas");
         const id = req.params.id;
         const query = { _id: new ObjectId(id) };
         const result = await visaCollection.findOne(query);
@@ -89,6 +97,7 @@ app.get('/visas/:id', async (req, res) => {
 
 app.put('/visas/:id', async (req, res) => {
     try {
+        const visaCollection = db.collection("visas");
         const id = req.params.id;
         const updatedVisaData = req.body;
         const filter = { _id: new ObjectId(id) };
@@ -104,6 +113,7 @@ app.put('/visas/:id', async (req, res) => {
 
 app.post('/visas', async (req, res) => {
     try {
+        const visaCollection = db.collection("visas");
         const newVisa = req.body;
         if (newVisa.fee) newVisa.fee = Number(newVisa.fee);
         if (newVisa.age_restriction) newVisa.age_restriction = Number(newVisa.age_restriction);
@@ -114,6 +124,7 @@ app.post('/visas', async (req, res) => {
 
 app.post('/application', async (req, res) => {
     try {
+        const applicatinCollection = db.collection("applications");
         const application = req.body;
         const result = await applicatinCollection.insertOne(application);
         res.send(result);
@@ -122,6 +133,7 @@ app.post('/application', async (req, res) => {
 
 app.get('/application', async (req, res) => {
     try {
+        const applicatinCollection = db.collection("applications");
         const email = req.query.email;
         const searchCountry = req.query.search;
         let query = { email: email };
@@ -135,6 +147,7 @@ app.get('/application', async (req, res) => {
 
 app.delete('/applications/:id', async (req, res) => {
     try {
+        const applicatinCollection = db.collection("applications");
         const id = req.params.id;
         const query = { _id: new ObjectId(id) };
         const result = await applicatinCollection.deleteOne(query);
