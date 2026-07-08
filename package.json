@@ -18,8 +18,7 @@
     "mongodb": "^7.4.0"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://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@github.com/Abd-Wahed/visa-navigator-server.git"
+    "type": "git"
   },
   "bugs": {
     "url": "https://github.com/Abd-Wahed/visa-navigator-server/issues"
