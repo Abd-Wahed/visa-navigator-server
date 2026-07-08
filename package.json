@@ -16,5 +16,13 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "mongodb": "^7.4.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/Abd-Wahed/visa-navigator-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Abd-Wahed/visa-navigator-server/issues"
+  },
+  "homepage": "https://github.com/Abd-Wahed/visa-navigator-server#readme"
 }
