@@ -139,7 +139,7 @@ async function run() {
         if(searchCountry){
             query.country_name = {
                 $regex:searchCountry,
-                $option:'i'
+                $options:'i'
             };
         }
         const result = await applicatinCollection.find(query).toArray();
