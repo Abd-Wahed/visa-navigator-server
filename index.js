@@ -18,27 +18,27 @@ const client = new MongoClient(uri, {
 });
 
 // কালেকশন ভ্যারিয়েবলগুলো গ্লোবালি ডিক্লেয়ার করে রাখা
-let visaCollection;
-let applicatinCollection;
+// let visaCollection;
+// let applicatinCollection;
 
 
 const db = client.db("visaNavigatorDB");
 
-async function run() {
-  try {
-    // সার্ভারলেস এনভায়রনমেন্টে প্রতি রিকোয়েস্টে যেন নতুন কানেকশন ডেডলক না হয়
-    await client.connect(); 
-    console.log("You successfully connected to MongoDB!");
+// async function run() {
+//   try {
+//     // সার্ভারলেস এনভায়রনমেন্টে প্রতি রিকোয়েস্টে যেন নতুন কানেকশন ডেডলক না হয়
+//     await client.connect(); 
+//     console.log("You successfully connected to MongoDB!");
     
-    // ডাটাবেজ ও কালেকশন অ্যাসাইন করা
-    // visaCollection = client.db("visaNavigatorDB").collection("visas");
-    // applicatinCollection = client.db("visaNavigatorDB").collection("applications");
+//     // ডাটাবেজ ও কালেকশন অ্যাসাইন করা
+//     // visaCollection = client.db("visaNavigatorDB").collection("visas");
+//     // applicatinCollection = client.db("visaNavigatorDB").collection("applications");
 
-  } catch (error) {
-    console.error(error);
-  }
-}
-run().catch(console.dir);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+// run().catch(console.dir);
 
 // 🌐 সব এপিআই রাউট থাকবে run() ফাংশনের বাইরে, নিচে সরাসরি app স্কোপে:
 
